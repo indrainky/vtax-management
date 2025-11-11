@@ -1,18 +1,22 @@
-[![CodeGuide](/codeguide-backdrop.svg)](https://codeguide.dev)
+# v-tax Management V1.4
 
-# CodeGuide Starter Kit
+Aplikasi web internal untuk memusatkan data klien, melacak produk/jasa yang telah dibeli (aplikasi, add-ons, H2H), memonitor siklus kontrak tahunan, dan mengelola tugas harian (todo list & catatan).
 
-A modern web application starter template built with Next.js 15, featuring authentication, database integration, AI capabilities, and dark mode support.
+**Versi:** 1.4.0  
+**Status:** Active Development
+
+## 📚 Dokumentasi
+
+Untuk dokumentasi lengkap, silakan baca [DOCUMENTATION.md](./DOCUMENTATION.md)
 
 ## Tech Stack
 
 - **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
 - **Language:** TypeScript
 - **Authentication:** [Clerk](https://clerk.com/)
-- **Database:** [Supabase](https://supabase.com/)
+- **Database:** [Supabase](https://supabase.com/) (PostgreSQL)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
-- **AI Integration:** [Vercel AI SDK](https://sdk.vercel.ai/)
 - **Theme System:** [next-themes](https://github.com/pacocoursey/next-themes)
 
 ## Prerequisites
@@ -100,86 +104,95 @@ OPENAI_API_KEY=your_openai_api_key
 ANTHROPIC_API_KEY=your_anthropic_api_key
 ```
 
-## Features
+## Fitur Utama
 
-- 🔐 Authentication with Clerk (middleware protection)
-- 🗄️ Supabase Database with third-party auth integration
-- 🤖 AI Chat Interface with OpenAI/Anthropic support
-- 🎨 40+ shadcn/ui components (New York style)
-- 🌙 Dark mode with system preference detection
-- 🎯 Built-in setup dashboard with service status
-- 🚀 App Router with Server Components
-- 🔒 Row Level Security examples with Clerk user IDs
-- 📱 Responsive design with TailwindCSS v4
-- 🎨 Custom fonts (Geist Sans, Geist Mono, Parkinsans)
+### V1.4 Features
+
+- ✅ **Dashboard Analytics**: Charts dengan warna menarik untuk distribusi status kontrak, kontrak per tahun, produk terlaris, dan klien per kabupaten/kota
+- ✅ **Notes per Klien**: Catatan khusus per klien dengan CRUD lengkap
+- ✅ **Activity Timeline**: Timeline visual untuk tracking semua aktivitas klien secara otomatis
+
+### V1.3 Features
+
+- ✅ **Quick Wins**: Refactor code, pagination, global search, export CSV/Excel, notifikasi kontrak
+- ✅ **Pagination**: Pagination di semua tabel untuk performa yang lebih baik
+- ✅ **Global Search**: Pencarian global di seluruh aplikasi (Ctrl+K)
+- ✅ **Export Data**: Export ke CSV dan Excel untuk reporting
+- ✅ **Notifikasi Kontrak**: Reminder otomatis untuk kontrak yang akan berakhir
+- ✅ **Tab Kontrak**: Status kontrak di detail klien dengan badge berwarna
+
+### V1.2 Features
+- ✅ **Layout Improvement**: Card informasi klien full width untuk menampilkan lebih banyak list
+- ✅ **Manajemen Master Data**: Products, Add-ons, H2H Services dengan multiple banks
+- ✅ **Manajemen Klien**: CRUD lengkap dengan detail produk/add-ons/H2H
+- ✅ **Bank per Klien per Jasa H2H**: Setiap klien bisa pilih bank berbeda untuk jasa H2H yang sama
+- ✅ **CRUD Lengkap Jasa H2H**: Edit bank dari card info atau tabel
+- ✅ **Manajemen Kontrak**: Tracking lifecycle kontrak tahunan
+- ✅ **Dashboard**: Statistik, Todo List, dan Catatan dengan quick add
+- ✅ **Dark Mode**: Toggle dark/light mode
+- ✅ **Authentication**: Clerk dengan middleware protection
+- ✅ **UI/UX**: Gradient cards, badges berwarna, responsive design
 
 ## Project Structure
 
 ```
-codeguide-starter-kit/
+vtax-management/
 ├── src/
 │   ├── app/                    # Next.js app router pages
-│   │   ├── api/chat/          # AI chat API endpoint
-│   │   ├── globals.css        # Global styles with dark mode
-│   │   ├── layout.tsx         # Root layout with providers
-│   │   └── page.tsx           # Hero + setup dashboard
+│   │   ├── api/                # API routes
+│   │   │   ├── clients/       # Client API endpoints
+│   │   │   ├── products/      # Product API endpoints
+│   │   │   ├── addons/        # Addon API endpoints
+│   │   │   ├── h2h-services/  # H2H Service API endpoints
+│   │   │   ├── contracts/     # Contract API endpoints
+│   │   │   ├── todos/         # Todo API endpoints
+│   │   │   ├── notes/         # Note API endpoints
+│   │   │   └── dashboard/     # Dashboard API endpoints
+│   │   ├── dashboard/         # Dashboard page
+│   │   ├── master-data/       # Master data pages
+│   │   ├── clients/           # Client pages
+│   │   ├── contracts/         # Contract pages
+│   │   ├── todos/             # Todo pages
+│   │   └── notes/             # Note pages
 │   ├── components/            # React components
-│   │   ├── ui/                # shadcn/ui components (40+)
-│   │   ├── chat.tsx           # AI chat interface
+│   │   ├── ui/                # shadcn/ui components
+│   │   ├── sidebar.tsx        # Navigation sidebar
 │   │   ├── theme-provider.tsx # Theme context
-│   │   └── theme-toggle.tsx   # Dark mode toggle
+│   │   └── theme-toggle.tsx  # Dark mode toggle
 │   ├── lib/                   # Utility functions
 │   │   ├── supabase.ts        # Supabase client with Clerk auth
 │   │   ├── user.ts            # User utilities
-│   │   ├── utils.ts           # General utilities
-│   │   └── env-check.ts       # Environment validation
+│   │   └── utils.ts           # General utilities
 │   └── middleware.ts          # Clerk route protection
 ├── supabase/
-│   └── migrations/            # Database migrations with RLS examples
-├── CLAUDE.md                  # AI coding agent documentation
-├── SUPABASE_CLERK_SETUP.md   # Integration setup guide
+│   └── migrations/            # Database migrations
+│       ├── 001_example_tables_with_rls.sql
+│       ├── 002_vtax_management_tables.sql
+│       ├── 004_h2h_banks_relation.sql
+│       └── 005_client_h2h_banks.sql
+├── DOCUMENTATION.md           # Dokumentasi lengkap
+├── README.md                  # File ini
+├── app_summary.md             # Ringkasan aplikasi
 └── components.json            # shadcn/ui configuration
 ```
 
-## Database Integration
+## Quick Start
 
-This starter includes modern Clerk + Supabase integration:
-
-- **Third-party auth** (not deprecated JWT templates)
-- **Row Level Security** policies using `auth.jwt() ->> 'sub'` for Clerk user IDs
-- **Example migrations** with various RLS patterns (user-owned, public/private, collaboration)
-- **Server-side client** with automatic Clerk token handling
-
-## AI Coding Agent Integration
-
-This starter is optimized for AI coding agents:
-
-- **`CLAUDE.md`** - Comprehensive project context and patterns
-- **Setup guides** with detailed integration steps
-- **Example migrations** with RLS policy templates
-- **Clear file structure** and naming conventions
-- **TypeScript integration** with proper type definitions
-
-## Documentation Setup
-
-To implement the generated documentation from CodeGuide:
-
-1. Create a `documentation` folder in the root directory:
+1. **Install dependencies**
    ```bash
-   mkdir documentation
+   npm install
    ```
 
-2. Place all generated markdown files from CodeGuide in this directory:
+2. **Setup environment variables** (lihat bagian Configuration di atas)
+
+3. **Run database migrations** di Supabase Dashboard
+
+4. **Start development server**
    ```bash
-   # Example structure
-   documentation/
-   ├── project_requirements_document.md             
-   ├── app_flow_document.md
-   ├── frontend_guideline_document.md
-   └── backend_structure_document.md
+   npm run dev
    ```
 
-3. These documentation files will be automatically tracked by git and can be used as a reference for your project's features and implementation details.
+5. **Open [http://localhost:3000](http://localhost:3000)**
 
 ## Contributing
 
